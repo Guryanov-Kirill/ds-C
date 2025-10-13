@@ -10,8 +10,8 @@ int main(void)
         t = a + b;
         a = b;
         b = t;
-        if (b <= 1000000){
-            if (b % 2 == 0){
+        if (b <= 1000000) {
+            if (b % 2 == 0) {
                 count = count + b;
                 printf("%d\n", b);
             }
