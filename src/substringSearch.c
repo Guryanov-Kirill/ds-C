@@ -3,11 +3,12 @@
 
 int substringSearch(const char* s, const char* s1)
 {
+    int lenS1 = strlen(s1);
     int count = 0;
     const char* pos = s;
     while ((pos = strstr(pos, s1)) != NULL) {
         count++;
-        pos += strlen(s1);
+        pos += lenS1;
     }
     return count;
 }
