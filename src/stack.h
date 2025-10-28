@@ -1,3 +1,5 @@
+#pragma once
+
 struct StackNode {
     int value;
     struct StackNode* next;
