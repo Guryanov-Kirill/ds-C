@@ -7,14 +7,14 @@ typedef struct ListNode {
 } ListNode;
 
 typedef struct List {
-    struct ListNode* head;
+    struct ListNode* tail;
 } List;
 
-ListNode* new();
+List* new();
 
 bool insertList(List* list, int index, int value);
 
-bool deleteList(List* list, int index);
+bool pop(List* list, int index);
 
 int get(List* list, int index);
 
