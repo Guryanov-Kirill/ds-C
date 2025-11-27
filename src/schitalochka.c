@@ -15,13 +15,13 @@ int schitalochka(int n, int m)
     }
     ListNode* current = warriors->tail->next;
     int step = 1;
-    while (warriors->tail->next != warriors->tail){
-        if (step == m - 1){
+    while (warriors->tail->next != warriors->tail) {
+        if (step == m - 1) {
 
             ListNode* victim = current->next;
             current->next = victim->next;
 
-            if (warriors->tail == victim){
+            if (warriors->tail == victim) {
                 warriors->tail = current;
             }
             free(victim);
