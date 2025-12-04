@@ -1,20 +1,11 @@
-#include "list.h"
+#include "sortedList.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-struct ListNode {
-    int value;
-    struct ListNode* next;
-};
-
-struct List {
-    struct ListNode* head;
-};
-
-ListNode* new()
+List* new()
 {
-    List* list = calloc(1, ListNode*);
+    List* list = calloc(1, sizeof(List));
     return list;
 }
 
@@ -105,13 +96,15 @@ void printList(List* list)
     printf("\n");
 }
 
-bool deleteList(List* list)
+bool deleteListAll(List* list)
 {
     if (list == NULL) {
         return false;
     }
     while (list->head != NULL) {
-        pop(list, 0);
+        ListNode* temp = list->head;
+        list->head = list->head->next;
+        free(temp);
     }
     free(list);
     return true;

@@ -10,7 +10,7 @@ typedef struct List {
     struct ListNode* head;
 } List;
 
-ListNode* new();
+List* new();
 
 bool insertList(List* list, int index, int value);
 
@@ -20,4 +20,4 @@ int get(List* list, int index);
 
 void printList(List* list);
 
-bool deleteList(List* list);
+bool deleteListAll(List* list);
