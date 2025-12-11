@@ -36,7 +36,7 @@ int main(void)
     minNumber(number);
     printf("\n");
     number = 879437;
-    minNumber(number)
+    minNumber(number);
         printf("\n");
     return 0;
 }
