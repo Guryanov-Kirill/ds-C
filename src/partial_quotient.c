@@ -3,9 +3,9 @@
 
 int partialQuotient(int a, int b)
 {
-    int flag = 0;
+    int sign = 1;
     if (a * b < 0) {
-        flag = 1;
+        sign = -1;
     }
     if (b == 0) {
         return 0;
@@ -16,22 +16,18 @@ int partialQuotient(int a, int b)
         absA -= absB;
         quotient++;
     }
-    if (flag == 1) {
-        return -quotient;
-    } else {
-        return quotient;
-    }
+    return quotient * sign;
 }
 
 int main()
 {
-    int a, b;
+    int a, b = 0;
     printf("Введите a и b: ");
     scanf("%d %d", &a, &b);
-    int result = partialQuotient(a, b);
-    if (result == 0) {
+    if (b == 0) {
         printf("Ошибка деление на ноль");
     } else {
+        int result = partialQuotient(a, b);
         printf("Неполное частное от деления %d на %d: %d\n", a, b, result);
     }
     return 0;
