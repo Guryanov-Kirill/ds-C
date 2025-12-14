@@ -9,7 +9,7 @@ double formula(double x)
 }
 int main(void)
 {
-    double x;
+    double x = 0;
     printf("Введите x: ");
     scanf("%lf", &x);
     double result = formula(x);
