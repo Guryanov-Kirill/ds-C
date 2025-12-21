@@ -1,4 +1,4 @@
-#include "list.h"
+#include "sortedList.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,19 +12,19 @@ struct List {
     struct ListNode* head;
 };
 
-ListNode* new()
+List* new()
 {
-    List* list = calloc(1, ListNode*);
+    List* list = calloc(1, sizeof(List));
     return list;
 }
 
-bool insertList(List* list, int index, int value)
+bool insertListElement(List* list, int value)
 {
     if (list == NULL) {
         return false;
     }
 
-    ListNode* newNode = malloc(sizeof(ListNode));
+    ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
     if (newNode == NULL) {
         return false;
     }
@@ -46,55 +46,54 @@ bool insertList(List* list, int index, int value)
     return true;
 }
 
-bool deleteList(List* list, int index)
+bool deleteListElement(List* list, int elementIndex)
 {
-    if (index < 0 || list->head == NULL) {
+    if (elementIndex < 0 || list->head == NULL) {
         return false;
     }
 
-    if (index == 0) {
+    if (elementIndex == 0) {
         ListNode* popNode = list->head;
         list->head = popNode->next;
         free(popNode);
         return true;
     }
     ListNode* current = list->head;
-    int idx = 0;
+    int index = 0;
     while ((current != NULL) && (current->next != NULL)) {
-        if (idx == index - 1) {
+        if (index == elementIndex - 1) {
             ListNode* popNode = current->next;
             current->next = popNode->next;
             free(popNode);
             return true;
         }
         current = current->next;
-        idx++;
+        index++;
     }
     return false;
 }
 
-int get(List* list, int index)
+int get(List* list, int elementIndex)
 {
-    if (list->head == NULL || index < 0 || list == NULL) {
+    if (list->head == NULL || elementIndex < 0 || list == NULL) {
         return -1;
     }
     ListNode* current = list->head;
-    int idx = 0;
+    int index = 0;
     while (current != NULL) {
-        if (index == idx) {
+        if (elementIndex == index) {
             return current->value;
         }
         current = current->next;
-        idx++;
+        index++;
     }
     return -1;
 }
 
-void printList(List* list)
+bool printList(List* list)
 {
     if (list == NULL) {
-        printf("List is NULL\n");
-        return;
+        return false;
     }
 
     ListNode* current = list->head;
@@ -103,6 +102,7 @@ void printList(List* list)
         current = current->next;
     }
     printf("\n");
+    return true;
 }
 
 bool deleteList(List* list)
@@ -111,7 +111,7 @@ bool deleteList(List* list)
         return false;
     }
     while (list->head != NULL) {
-        pop(list, 0);
+        deleteListElement(list, 0);
     }
     free(list);
     return true;
