@@ -4,7 +4,7 @@
 #include <string.h>
 
 // Функция для расставоения приоритетов операций
-int priority(char sim)
+int getOperatorPrecedence(char sim)
 {
     if ((sim == '+') || (sim == '-')) {
         return 1;
@@ -16,17 +16,18 @@ int priority(char sim)
 }
 
 // Проверяет операнд или нет
-bool check(char sim)
+bool isOperand(char sim)
 {
-    if ((sim == '+') || (sim == '-') || (sim == '*') || (sim == '/')){
+    if ((sim == '+') || (sim == '-') || (sim == '*') || (sim == '/')) {
         return true;
     }
     return false;
 }
 
-void printExit(char array[], int size){
-    for (int i = 0; i < size; i++){
-        printf("%c" ,array[i]);
+void printExit(char array[], int size)
+{
+    for (int i = 0; i < size; i++) {
+        printf("%c", array[i]);
     }
     printf("\n");
 }
@@ -35,7 +36,10 @@ int main()
 {
     char sentence[50];
     printf("Введите выражение\n");
-    scanf("%[^\n]", sentence);
+    if (scanf("%49[^\n]", sentence) != 1) {
+        printf("Ошибка ввода\n");
+        return 1;
+    }
     int length = strlen(sentence);
 
     struct Stack oper = new();
@@ -47,12 +51,12 @@ int main()
 
         if (sentence[i] != ' ') {
 
-            if (check(sentence[i])) {
+            if (isOperand(sentence[i])) {
                 char up = peek(&oper);
 
                 // Выталкиваем элементы из стека
                 // пока приоритет проверяемого символа не будет меньше приоритета верхнего элемента стека
-                while ((up != -1) && (priority (sentence[i]) <= priority(up))) {
+                while ((up != -1) && (getOperatorPrecedence(sentence[i]) <= getOperatorPrecedence(up))) {
                     exit[sizeExit] = pop(&oper);
                     sizeExit++;
                     up = peek(&oper);
@@ -64,10 +68,10 @@ int main()
                 sizeExit++;
             }
         }
-        }
-    
+    }
+
     // Кладём в выходной массив оставшиеся в стеке операнды
-    while (peek(&oper) != -1){
+    while (peek(&oper) != -1) {
         exit[sizeExit] = pop(&oper);
         sizeExit++;
     }
