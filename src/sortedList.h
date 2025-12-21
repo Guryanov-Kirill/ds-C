@@ -10,14 +10,14 @@ typedef struct List {
     struct ListNode* head;
 } List;
 
-ListNode* new();
+List* new();
 
-bool insertList(List* list, int index, int value);
+bool insertListElement(List* list, int value);
 
-bool deleteList(List* list, int index);
+bool deleteListElement(List* list, int index);
 
 int get(List* list, int index);
 
-void printList(List* list);
+bool printList(List* list);
 
 bool deleteList(List* list);
