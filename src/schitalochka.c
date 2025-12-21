@@ -1,17 +1,20 @@
-#include "list.h"
+#include "cycleList.h"
 #include "stdio.h"
 #include <stdlib.h>
 
 int schitalochka(int n, int m)
 {
     if (n <= 0 || m <= 0) {
-        return -1;
+        return errorCode;
     }
 
     List* warriors = new();
+    if (warriors == NULL) {
+        return errorCode;
+    }
 
     for (int i = 0; i < n; i++) {
-        insertList(warriors, i, i + 1);
+        insertListElement(warriors, i, i + 1);
     }
     ListNode* current = warriors->tail->next;
     int step = 1;
@@ -34,17 +37,21 @@ int schitalochka(int n, int m)
     }
     int k = warriors->tail->value;
     printf("Последним остался воин: %d\n", k);
-    deleteList(warriors);
+    if (deleteList(warriors) == false) {
+        return errorCode;
+    }
     return k;
 }
 int main()
 {
     printf("Введите количество воинов: ");
     int n = 0;
-    scanf("%d", &n);
-    printf("Введите шаг убийства: ");
-    int m = 0;
-    scanf("%d", &m);
-    schitalochka(n, m);
+    if (scanf("%d", &n) == 1) {
+        printf("Введите шаг убийства: ");
+        int m = 0;
+        if (scanf("%d", &m) == 1) {
+            schitalochka(n, m);
+        }
+    }
     return 0;
 }
