@@ -1,6 +1,8 @@
 #pragma once
 #include <stdbool.h>
 
+#define errorCode -111111
+
 typedef struct ListNode {
     int value;
     struct ListNode* next;

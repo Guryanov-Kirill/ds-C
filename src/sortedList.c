@@ -15,7 +15,11 @@ struct List {
 List* new()
 {
     List* list = calloc(1, sizeof(List));
-    return list;
+    if (list != NULL) {
+        return list;
+    } else {
+        return errorCode;
+    }
 }
 
 bool insertListElement(List* list, int value)
@@ -26,7 +30,7 @@ bool insertListElement(List* list, int value)
 
     ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
     if (newNode == NULL) {
-        return false;
+        return errorCode;
     }
     newNode->value = value;
     newNode->next = NULL;
