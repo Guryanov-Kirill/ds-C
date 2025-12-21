@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-bool check(char open, char close){
+bool isCorrectPairOfBracket(char open, char close){
     if ((open == '(' && close == ')') || (open == '[' && close == ']') || (open == '{' && close == '}')){
         return true;
     }
@@ -11,26 +11,29 @@ bool check(char open, char close){
 }
 int main(void)
 {
-    struct Stack myStack = new();
-    printf("Введите строку для проверки\n");
-    char str[50];
-    scanf("%s", str);
-    int lenght = strlen(str);
-    for (int i = 0; i < lenght; i++){
-        if ((str[i] == '(') || (str[i] == '{') || (str[i] == '[')){
-            push(&myStack, str[i]);
-        }
-        if ((str[i] == ')') || (str[i] == '}') || (str[i] == ']')){
-            if (check(peek(&myStack), str[i])){
-                pop(&myStack);
+    struct Stack bracketStack = new();
+    printf("Введите строку для проверки(<= 50)\n");
+    char buffer[50];
+    if (scanf("%49s", buffer) == 1){
+        int lenght = strlen(buffer);
+        for (int i = 0; i < lenght; i++){
+            if ((buffer[i] == '(') || (buffer[i] == '{') || (buffer[i] == '[')){
+                push(&bracketStack, buffer[i]);
+            }
+            if ((buffer[i] == ')') || (buffer[i] == '}') || (buffer[i] == ']')){
+                if (isCorrectPairOfBracket(peek(&bracketStack), buffer[i])){
+                    pop(&bracketStack);
+                }
             }
         }
+        if (peek(&bracketStack) == -1){
+            printf("Баланс есть\n");
+        } else{
+            printf("Баланса нет\n");
+        }
+    } else {
+        printf("Ошибка ввода\n");
     }
-    if (peek(&myStack) == -1){
-        printf("Баланс есть\n");
-    } else{
-        printf("Баланса нет\n");
-    }
-    stackFree(&myStack);
+    stackFree(&bracketStack);
     return 0;
 }
