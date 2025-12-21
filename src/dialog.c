@@ -1,7 +1,10 @@
+#include "sortedList.h"
+#include <stdio.h>
+
 int main()
 {
-    List* list = newList();
-    int choice;
+    List* list = new();
+    int choice = 0;
 
     do {
         scanf("%d", &choice);
@@ -10,15 +13,15 @@ int main()
             break;
 
         case 1:
-            int value;
+            int value = 0;
             scanf("%d", &value);
-            insertSorted(list, value);
+            insertListElement(list, value);
             break;
 
         case 2:
-            int index;
+            int index = 0;
             scanf("%d", &index);
-            deleteValue(list, index);
+            deleteListElement(list, index);
             break;
 
         case 3:
