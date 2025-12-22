@@ -6,11 +6,12 @@ struct Stack {
     struct StackNode* head;
 };
 
-struct Stack new(void)
+Stack* new()
 {
-    struct Stack stack = {
-        .head = NULL
-    };
+    Stack* stack = malloc(sizeof(struct Stack));
+    if (stack != NULL) {
+        stack->head = NULL;
+    }
     return stack;
 }
 

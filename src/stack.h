@@ -12,16 +12,16 @@ struct Stack {
 typedef struct Stack Stack;
 
 // Создание нового стека
-struct Stack new(void);
+Stack* new();
 
 // Добавление элемента
-void push(struct Stack* stack, int value, int* errorCode);
+void push(Stack* stack, int value, int* errorCode);
 
 // Удаление верхнего элемента
-int pop(struct Stack* stack, int* errorCode);
+int pop(Stack* stack, int* errorCode);
 
 // Вывод верхнего элемента
-int peek(struct Stack* stack, int* errorCode);
+int peek(Stack* stack, int* errorCode);
 
 // Удаление всего стека (очистка памяти)
-void stackFree(struct Stack* stack);
+void stackFree(Stack* stack);

@@ -42,7 +42,7 @@ int main()
     }
     int length = strlen(sentence);
 
-    struct Stack oper = new();
+    Stack* oper = new();
     int errorCode = 0;
 
     char exit[100];
@@ -53,7 +53,7 @@ int main()
         if (sentence[i] != ' ') {
 
             if (isOperand(sentence[i])) {
-                char up = peek(&oper, &errorCode);
+                char up = peek(oper, &errorCode);
                 if (errorCode == 1) {
                     return 1;
                 }
@@ -61,14 +61,14 @@ int main()
                 // Выталкиваем элементы из стека
                 // пока приоритет проверяемого символа не будет меньше приоритета верхнего элемента стека
                 while ((up != -1) && (getOperatorPrecedence(sentence[i]) <= getOperatorPrecedence(up))) {
-                    exit[sizeExit] = pop(&oper, &errorCode);
+                    exit[sizeExit] = pop(oper, &errorCode);
                     sizeExit++;
-                    up = peek(&oper, &errorCode);
+                    up = peek(oper, &errorCode);
                     if (errorCode == 1) {
                         return 1;
                     }
                 }
-                push(&oper, sentence[i], &errorCode);
+                push(oper, sentence[i], &errorCode);
                 if (errorCode == 1) {
                     printf("Ошибка выделения памяти\n");
                     return 1;
@@ -82,15 +82,15 @@ int main()
     }
 
     // Кладём в выходной массив оставшиеся в стеке операнды
-    while (peek(&oper, &errorCode) != -1) {
-        exit[sizeExit] = pop(&oper, &errorCode);
+    while (peek(oper, &errorCode) != -1) {
+        exit[sizeExit] = pop(oper, &errorCode);
         if (errorCode == 1) {
             return 1;
         }
         sizeExit++;
     }
 
-    stackFree(&oper);
+    stackFree(oper);
     if (errorCode == 1) {
         return 1;
     }
