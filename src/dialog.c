@@ -1,6 +1,13 @@
 #include "sortedList.h"
 #include <stdio.h>
 
+enum state {
+    EXIT = 0,
+    ADD = 1, 
+    DELETE = 2,
+    PRINT = 3
+};
+
 int main()
 {
     List* list = new();
@@ -9,26 +16,26 @@ int main()
     do {
         scanf("%d", &choice);
         switch (choice) {
-        case 0:
+        case EXIT:
             break;
 
-        case 1:
+        case ADD:
             int value = 0;
             scanf("%d", &value);
             insertListElement(list, value);
             break;
 
-        case 2:
+        case DELETE:
             int index = 0;
             scanf("%d", &index);
             deleteListElement(list, index);
             break;
 
-        case 3:
+        case PRINT:
             printList(list);
             break;
         }
-    } while (choice != 0);
+    } while (choice != EXIT);
     deleteList(list);
     return 0;
 }
