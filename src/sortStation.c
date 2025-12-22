@@ -83,7 +83,7 @@ int main()
 
     // Кладём в выходной массив оставшиеся в стеке операнды
     while (peek(&oper, &errorCode) != -1) {
-        exit[sizeExit] = pop(&oper);
+        exit[sizeExit] = pop(&oper, &errorCode);
         if (errorCode == 1) {
             return 1;
         }

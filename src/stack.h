@@ -1,10 +1,12 @@
 #pragma once
 
-#define errorCode -111111
-
 struct StackNode {
     int value;
     struct StackNode* next;
+};
+
+struct Stack {
+    struct StackNode* head;
 };
 
 typedef struct Stack Stack;
