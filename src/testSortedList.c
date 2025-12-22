@@ -2,17 +2,15 @@
 #include <assert.h>
 #include <stdio.h>
 
-void test_create_and_delete_list()
+bool test_create_and_delete_list()
 {
     List* list = new();
-    assert(list != NULL);
-    assert(list->head == NULL);
-
-    bool result = deleteListAll(list);
-    assert(result == true);
+    if (list != NULL) return false;
+    if (list->head == NULL) return false;
+    return deleteListAll(list);
 }
 
-void test_insert_and_get()
+bool test_insert_and_get()
 {
     List* list = new();
 
