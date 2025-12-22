@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <errno.h>
+
 // Функция для расставоения приоритетов операций
 int getOperatorPrecedence(char sim)
 {
@@ -64,7 +66,7 @@ int main()
                     exit[sizeExit] = pop(oper, &errorCode);
                     sizeExit++;
                     up = peek(oper, &errorCode);
-                    if (errorCode == 1) {
+                    if (errorCode == ENOMEM) {
                         return 1;
                     }
                 }
@@ -93,7 +95,8 @@ int main()
     stackFree(oper);
     if (errorCode == 1) {
         return 1;
-    }
+    } 
     printExit(exit, sizeExit);
     return 0;
 }
+

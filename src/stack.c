@@ -8,7 +8,7 @@ struct Stack {
 
 Stack* new()
 {
-    Stack* stack = malloc(sizeof(struct Stack));
+    Stack* stack = malloc(sizeof(*stack));
     if (stack != NULL) {
         stack->head = NULL;
     }

@@ -1,5 +1,7 @@
 #pragma once
 
+#define errorCode -111111
+
 struct StackNode {
     int value;
     struct StackNode* next;
