@@ -1,7 +1,6 @@
 #pragma once
-#include <stdbool.h>
-
-#define errorCode -111111
+#include <stdint.h>
+#include <errno.h>
 
 typedef struct ListNode {
     int value;
@@ -14,12 +13,12 @@ typedef struct List {
 
 List* new();
 // Добавление элемента
-bool insertListElement(List* list, int index, int value);
+int insertListElement(List* list, int index, int value);
 // Удаление элемента
-bool pop(List* list, int index);
+int pop(List* list, int index);
 // Вывод элемента
 int get(List* list, int index);
 // Вывод всего списка
 void printList(List* list);
 // Удаление списка
-bool deleteList(List* list);
+int deleteList(List* list);

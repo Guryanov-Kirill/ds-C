@@ -2,92 +2,88 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 
 List* new()
 {
-    List* list = calloc(1, sizeof(List));
-    if (list != NULL) {
-        return list;
-    } else {
-        return NULL;
-    }
+    return(calloc(1, sizeof(List)));
 }
 
-bool insertListElement(List* list, int index, int value)
+int insertListElement(List* list, int index, int value)
 {
     if (index < 0 || list == NULL) {
-        return false;
+        return EINVAL;
     }
 
     ListNode* newNode = malloc(sizeof(ListNode));
     if (newNode == NULL) {
-        return false;
+        return EINVAL;
     }
     newNode->value = value;
 
     if (list->tail == NULL) {
         if (index != 0) {
             free(newNode);
-            return false;
+            return ENOMEM;
         }
         newNode->next = newNode;
         list->tail = newNode;
-        return true;
+        return 0;
     }
 
     if (index == 0) {
         newNode->next = list->tail->next;
         list->tail->next = newNode;
-        return true;
+        return 0;
     }
 
     ListNode* current = list->tail->next;
-    int idx = 0;
+    int currentIndex = 0;
 
     do {
-        if (idx == index - 1) {
+        if (currentIndex == index - 1) {
             newNode->next = current->next;
             current->next = newNode;
 
             if (current == list->tail) {
                 list->tail = newNode;
             }
-            return true;
+            return 0;
         }
-        idx++;
+        currentIndex++;
         current = current->next;
-    } while (current != list->tail->next && idx <= index);
+    } while (current != list->tail->next && currentIndex <= index);
 
     free(newNode);
-    return false;
+    return EINVAL;
 }
 
-bool pop(List* list, int index)
+int pop(List* list, int index)
 {
     if (index < 0 || list == NULL || list->tail == NULL) {
-        return false;
+        return EINVAL;
     }
 
     if (list->tail->next == list->tail) {
         if (index != 0)
-            return false;
+            return EINVAL;
         free(list->tail);
         list->tail = NULL;
-        return true;
+        return 0;
     }
 
     if (index == 0) {
         ListNode* head = list->tail->next;
         list->tail->next = head->next;
         free(head);
-        return true;
+        return 0;
     }
 
     ListNode* current = list->tail->next;
-    int idx = 0;
+    int currentIndex = 0;
 
     do {
-        if (idx == index - 1) {
+        if (currentIndex == index - 1) {
             ListNode* popNode = current->next;
             current->next = popNode->next;
 
@@ -96,33 +92,33 @@ bool pop(List* list, int index)
             }
 
             free(popNode);
-            return true;
+            return 0;
         }
-        idx++;
+        currentIndex++;
         current = current->next;
-    } while (current != list->tail->next && idx <= index);
+    } while (current != list->tail->next && currentIndex <= index);
 
-    return false;
+    return EINVAL;
 }
 
 int get(List* list, int index)
 {
     if (list == NULL || list->tail == NULL || index < 0) {
-        return errorCode;
+        return ENOMEM;
     }
 
     ListNode* current = list->tail->next;
-    int idx = 0;
+    int currentIndex = 0;
 
     do {
-        if (idx == index) {
+        if (currentIndex == index) {
             return current->value;
         }
-        idx++;
+        currentIndex++;
         current = current->next;
-    } while (current != list->tail->next && idx <= index);
+    } while (current != list->tail->next && currentIndex <= index);
 
-    return errorCode;
+    return ENOMEM;
 }
 
 void printList(List* list)
@@ -144,10 +140,10 @@ void printList(List* list)
     printf("\n");
 }
 
-bool deleteList(List* list)
+int deleteList(List* list)
 {
     if (list == NULL) {
-        return false;
+        return EINVAL;
     }
 
     if (list->tail != NULL) {
@@ -162,5 +158,5 @@ bool deleteList(List* list)
     }
 
     free(list);
-    return true;
+    return 0;
 }

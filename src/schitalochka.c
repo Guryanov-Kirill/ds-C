@@ -9,9 +9,6 @@ int schitalochka(int n, int m)
     }
 
     List* warriors = new();
-    if (warriors == NULL) {
-        return errorCode;
-    }
 
     for (int i = 0; i < n; i++) {
         insertListElement(warriors, i, i + 1);
@@ -37,8 +34,8 @@ int schitalochka(int n, int m)
     }
     int k = warriors->tail->value;
     printf("Последним остался воин: %d\n", k);
-    if (deleteList(warriors) == false) {
-        return errorCode;
+    if (!deleteList(warriors)) {
+        return ENIVAL;
     }
     return k;
 }
