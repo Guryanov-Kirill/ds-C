@@ -1,0 +1,111 @@
+#include "sortedList.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+List* new()
+{
+    List* list = calloc(1, sizeof(List));
+    return list;
+}
+
+bool insertList(List* list, int index, int value)
+{
+    if (list == NULL) {
+        return false;
+    }
+
+    ListNode* newNode = malloc(sizeof(ListNode));
+    if (newNode == NULL) {
+        return false;
+    }
+    newNode->value = value;
+    newNode->next = NULL;
+
+    if ((list->head == NULL) || (value <= list->head->value)) {
+        newNode->next = list->head;
+        list->head = newNode;
+        return true;
+    }
+
+    ListNode* current = list->head;
+    while ((current->next != NULL) && (current->next->value < value)) {
+        current = current->next;
+    }
+    newNode->next = current->next;
+    current->next = newNode;
+    return true;
+}
+
+bool deleteList(List* list, int index)
+{
+    if (index < 0 || list->head == NULL) {
+        return false;
+    }
+
+    if (index == 0) {
+        ListNode* popNode = list->head;
+        list->head = popNode->next;
+        free(popNode);
+        return true;
+    }
+    ListNode* current = list->head;
+    int idx = 0;
+    while ((current != NULL) && (current->next != NULL)) {
+        if (idx == index - 1) {
+            ListNode* popNode = current->next;
+            current->next = popNode->next;
+            free(popNode);
+            return true;
+        }
+        current = current->next;
+        idx++;
+    }
+    return false;
+}
+
+int get(List* list, int index)
+{
+    if (list->head == NULL || index < 0 || list == NULL) {
+        return -1;
+    }
+    ListNode* current = list->head;
+    int idx = 0;
+    while (current != NULL) {
+        if (index == idx) {
+            return current->value;
+        }
+        current = current->next;
+        idx++;
+    }
+    return -1;
+}
+
+void printList(List* list)
+{
+    if (list == NULL) {
+        printf("List is NULL\n");
+        return;
+    }
+
+    ListNode* current = list->head;
+    while (current != NULL) {
+        printf("%d", current->value);
+        current = current->next;
+    }
+    printf("\n");
+}
+
+bool deleteListAll(List* list)
+{
+    if (list == NULL) {
+        return false;
+    }
+    while (list->head != NULL) {
+        ListNode* temp = list->head;
+        list->head = list->head->next;
+        free(temp);
+    }
+    free(list);
+    return true;
+}
